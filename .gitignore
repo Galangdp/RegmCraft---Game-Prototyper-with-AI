@@ -1,41 +1,64 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ==========================================
+# REGMCRAFT MONOREPO .gitignore
+# ==========================================
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# --- C Engine: Binaries & Build Artifacts ---
+core-engine/build/
+core-engine/src/*.o
+core-engine/src/*.a
+core-engine/*.o
+core-engine/*.a
+core-engine/*.so
+core-engine/*.dylib
+core-engine/*.exe
+*.o
+*.a
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# --- Node.js ---
+node_modules/
+frontend/node_modules/
+backend/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# --- Next.js (Frontend) ---
+frontend/.next/
+frontend/out/
+frontend/.vercel
 
-# vercel
-.vercel
+# --- Environment Variables ---
+.env
+.env.local
+.env.*.local
+.env.production
+frontend/.env.local
+backend/.env
+backend/.env.local
+.env.example
 
-# typescript
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Testing & Coverage ---
+coverage/
+.nyc_output/
+
+# --- TypeScript ---
 *.tsbuildinfo
 next-env.d.ts
+
+# --- Misc ---
+*.pem
+*.log
+tmp/
+temp/
