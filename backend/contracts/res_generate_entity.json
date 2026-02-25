@@ -1,0 +1,18 @@
+{
+    "_comment": "Payload yang dikembalikan C Engine → Backend → Frontend via stdout",
+    "request_id": "req_a1b2c3d4",
+    "status": "ok",
+    "entity_type": "sprite",
+    "output": {
+        "format": "png_base64",
+        "width": 64,
+        "height": 64,
+        "data": "iVBORw0KGgoAAAANSUhEUgAA... (base64 encoded PNG)"
+    },
+    "metadata": {
+        "layers_composed": 3,
+        "render_time_ms": 42,
+        "material_applied": "pixel_art_sharp"
+    },
+    "error": null
+}

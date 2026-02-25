@@ -1,0 +1,57 @@
+{
+    "_comment": "Payload yang dikirim Frontend → Backend → C Engine via stdin",
+    "request_id": "req_a1b2c3d4",
+    "action": "generate_entity",
+    "entity_type": "sprite",
+    "canvas": {
+        "width": 64,
+        "height": 64
+    },
+    "layers": [
+        {
+            "layer_id": "body",
+            "part_id": "humanoid_body_01",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "color": {
+                "primary": "#4A90D9",
+                "secondary": "#2C5F8A",
+                "outline": "#1A3A5C"
+            },
+            "z_index": 0
+        },
+        {
+            "layer_id": "head",
+            "part_id": "humanoid_head_01",
+            "position": {
+                "x": 16,
+                "y": 0
+            },
+            "color": {
+                "primary": "#F5CBA7",
+                "secondary": "#E59866",
+                "outline": "#784212"
+            },
+            "z_index": 1
+        },
+        {
+            "layer_id": "weapon",
+            "part_id": "sword_01",
+            "position": {
+                "x": 48,
+                "y": 16
+            },
+            "color": {
+                "primary": "#BDC3C7",
+                "secondary": "#7F8C8D",
+                "outline": "#2C3E50"
+            },
+            "z_index": 2
+        }
+    ],
+    "material": "pixel_art_sharp",
+    "output_format": "png_base64",
+    "ai_prompt": "warrior character, fantasy RPG style, bold outline"
+}
