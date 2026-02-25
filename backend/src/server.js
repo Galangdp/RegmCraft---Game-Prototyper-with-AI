@@ -32,6 +32,8 @@ app.use(express.json({ limit: "10mb" }));
 
 // ─── Helper: Invoke C Engine ──────────────────────────────────────────────────
 
+// ─── Helper: Invoke C Engine ──────────────────────────────────────────────────
+
 /**
  * Menjalankan C Engine sebagai child process dan berkomunikasi via stdin/stdout.
  * @param {object} payload - JSON payload yang dikirim ke C Engine via stdin
@@ -39,6 +41,8 @@ app.use(express.json({ limit: "10mb" }));
  */
 function invokeEngine(payload) {
     return new Promise((resolve, reject) => {
+        console.log(`[Engine] Spawning: ${ENGINE_BINARY}`);
+
         // Spawn C Engine binary sebagai child process
         const engineProcess = spawn(ENGINE_BINARY, [], {
             stdio: ["pipe", "pipe", "pipe"], // [stdin, stdout, stderr]
@@ -52,19 +56,21 @@ function invokeEngine(payload) {
             stdoutBuffer += chunk.toString();
         });
 
-        // Tangkap error/log dari C Engine (stderr = debug info)
+        // Tangkap error/log dari C Engine (stderr = debug info dari Farel)
         engineProcess.stderr.on("data", (chunk) => {
-            stderrBuffer += chunk.toString();
+            const msg = chunk.toString();
+            stderrBuffer += msg;
+            // Langsung log stderr ke console backend agar Senior Engineer bisa liat debug log C secara real-time
+            process.stderr.write(`[C-LOG] ${msg}`);
         });
 
         // Ketika C Engine selesai
         engineProcess.on("close", (exitCode) => {
             if (exitCode !== 0) {
                 console.error(`[Engine] Process exited with code ${exitCode}`);
-                console.error(`[Engine] stderr: ${stderrBuffer}`);
                 return reject(
                     new Error(
-                        `C Engine exited with code ${exitCode}. stderr: ${stderrBuffer}`
+                        `C Engine exited with code ${exitCode}. stderr: ${stderrBuffer.trim()}`
                     )
                 );
             }
@@ -76,7 +82,7 @@ function invokeEngine(payload) {
             } catch (parseError) {
                 reject(
                     new Error(
-                        `Gagal parse JSON dari C Engine: ${parseError.message}. Raw stdout: ${stdoutBuffer}`
+                        `Gagal parse JSON dari C Engine: ${parseError.message}. Raw stdout: ${stdoutBuffer.substring(0, 100)}...`
                     )
                 );
             }
@@ -87,19 +93,31 @@ function invokeEngine(payload) {
             reject(new Error(`Gagal menjalankan C Engine: ${err.message}`));
         });
 
-        // Set timeout 30 detik — jika engine tidak merespons, kill paksa
+        // Set timeout 30 detik — jika engine tidak merespons, kill paksa (Hukum Antigravity)
         const timeout = setTimeout(() => {
             engineProcess.kill("SIGKILL");
             reject(new Error("C Engine timeout setelah 30 detik"));
         }, 30_000);
 
         // Bersihkan timeout jika engine selesai lebih cepat
-        engineProcess.on("close", () => clearTimeout(timeout));
+        engineProcess.once("close", () => clearTimeout(timeout));
 
         // Kirim request payload ke stdin C Engine lalu tutup stdin
-        const jsonPayload = JSON.stringify(payload);
-        engineProcess.stdin.write(jsonPayload);
-        engineProcess.stdin.end(); // Sinyal ke C Engine bahwa input sudah selesai
+        try {
+            const jsonPayload = JSON.stringify(payload);
+            engineProcess.stdin.write(jsonPayload, (err) => {
+                if (err) {
+                    console.error(`[Engine] Stdin write error: ${err.message}`);
+                    engineProcess.kill();
+                    reject(err);
+                } else {
+                    engineProcess.stdin.end(); // Akhiri stream stdin
+                }
+            });
+        } catch (stringifyError) {
+            engineProcess.kill();
+            reject(new Error(`Payload invalid: ${stringifyError.message}`));
+        }
     });
 }
 
@@ -110,15 +128,58 @@ function invokeEngine(payload) {
  * GET /health
  */
 app.get("/health", (_req, res) => {
-    res.json({ status: "ok", engine: ENGINE_BINARY });
+    res.json({
+        status: "ok",
+        engine: ENGINE_BINARY,
+        platform: process.platform,
+        cwd: process.cwd()
+    });
 });
 
 /**
- * Main endpoint — Generate entity via C Engine
+ * Composition Bridge — Direct rendering dari config frontend ke Mesin C
+ * POST /api/engine/compose-and-render
+ */
+app.post("/api/engine/compose-and-render", async (req, res) => {
+    const startTime = Date.now();
+
+    if (!req.body || !req.body.layers) {
+        return res.status(400).json({
+            status: "error",
+            error: "Konfigurasi layer tidak valid",
+        });
+    }
+
+    console.log(`[Bridge] Incoming composition request (${req.body.layers.length} layers)`);
+
+    try {
+        // Paksa action ke generate_entity jika belum ada
+        const payload = {
+            action: "generate_entity",
+            ...req.body
+        };
+
+        const engineResponse = await invokeEngine(payload);
+
+        // Antigravity UX: Berikan metadata tambahan dari backend
+        const elapsed = Date.now() - startTime;
+        if (engineResponse.metadata) {
+            engineResponse.metadata.bridge_latency_ms = elapsed;
+        }
+
+        return res.json(engineResponse);
+    } catch (err) {
+        console.error(`[Bridge] ✗ Error: ${err.message}`);
+        return res.status(500).json({
+            status: "error",
+            error: err.message
+        });
+    }
+});
+
+/**
+ * Legacy/Generic Engine Endpoint
  * POST /api/engine/generate
- *
- * Body (JSON): req_generate_entity schema
- * Response (JSON): res_generate_entity schema
  */
 app.post("/api/engine/generate", async (req, res) => {
     const startTime = Date.now();
