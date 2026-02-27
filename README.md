@@ -6,7 +6,7 @@
 
 ```
 RegmCraft/
-├── core-engine/     ← C rendering engine (JSON I/O via stdin/stdout)
+├── engine/          ← C rendering engine (JSON I/O via stdin/stdout)
 ├── backend/         ← NodeJS + Express bridge server
 └── frontend/        ← Next.js web application
 ```
