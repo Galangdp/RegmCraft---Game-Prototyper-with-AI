@@ -27,19 +27,24 @@ int main(int argc, const char *argv[]) {
         string_t buffer;
 
         if (file_open(&matroot_file, MATERIAL_MATROOT_PATH, FILE_OMODE_RD) != EXIT_SUCCESS) {
-            console_write_cstr("Error when open matroot.");
+            console_write_cstr("{\"status\":\"fatal\",\"message\":\"Error when open matroot.\"}");
             return EXIT_FAILURE;
         }
 
         string_init_capacity(&buffer, 500);
 
         if (file_read_string(&matroot_file, &buffer) != EXIT_SUCCESS) {
-            console_write_cstr("Error when read matroot.");
+            console_write_cstr("{\"status\":\"fatal\",\"message\":\"Error when read matroot.\"}");
             return EXIT_FAILURE;
         }
 
         if (jsonmat_decode_material(&matroot, &perm_arena, &temp_arena, &json_idmap, &color_map, &color_stats, &buffer, &error_message) != EXIT_SUCCESS) {
-            console_write(&error_message);
+            string_t temp;
+
+            string_from_cstr(&temp, CSTR_FTL_TPFRONT);
+            string_push_string(&temp, &error_message);
+            string_push_cstr(&temp, CSTR_ALE_TPBACK);
+            console_write(&temp);
             return EXIT_FAILURE;
         }
     }
@@ -52,11 +57,7 @@ int main(int argc, const char *argv[]) {
     string_t buffer;
 
     while (TRUE) {
-    // do {
         console_read(&buffer);
-        // string_from_cstr(&buffer, "{\"cmd\":\"edit\",\"paletteId\":0,\"modelId\":0,\"moptionId\":0,\"parts\":[{\"variantId\":0,\"optionId\":3},{\"variantId\":0,\"optionId\":0},{\"variantId\":0,\"optionId\":0},{\"variantId\":0},{\"variantId\":0,\"optionId\":0},{\"variantId\":0,\"optionId\":0}]}");
-        // string_from_cstr(&buffer, "{\"cmd\":\"edit\",\"paletteId\":0,\"modelId\":0,\"moptionId\":0,\"parts\":[{\"variantId\":0,\"optionId\":3},{\"variantId\":0,\"optionId\":0},{\"variantId\":0,\"optionId\":0},{\"variantId\":0,\"optionId\":0},{\"variantId\":0,\"optionId\":0},{\"variantId\":0,\"optionId\":0}]}");
-        
         bool_t is_success = TRUE;
         
         if (json_parse(&in, &buffer, TRUE) != EXIT_SUCCESS) {
@@ -75,14 +76,13 @@ int main(int argc, const char *argv[]) {
         } else {
             string_push_cstrl(&buffer, CSTR_ERR_TPFRONT, sizeof(CSTR_ERR_TPFRONT) - 1);
             string_push_string(&buffer, &error_message);
-            string_push_cstrl(&buffer, CSTR_ERR_TPBACK, sizeof(CSTR_ERR_TPBACK) - 1);
+            string_push_cstrl(&buffer, CSTR_ALE_TPBACK, sizeof(CSTR_ALE_TPBACK) - 1);
         }
 
         console_write(&buffer);
         arena_reset(&temp_arena);
         string_deinit(&buffer);
     }
-    // } while(FALSE);
 
     return EXIT_SUCCESS;
 }
