@@ -33,7 +33,9 @@ cd backend && npm install && npm run dev
 
 ### Build C Engine
 ```bash
-cd core-engine && make
+cd engine/build
+cmake --build .
+cp -f "bin/rcengine" "../rcengine"
 ```
 
 ## Stdin/Stdout Contract
