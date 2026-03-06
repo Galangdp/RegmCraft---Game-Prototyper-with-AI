@@ -1,0 +1,13 @@
+{
+    "name": "Base Body",
+    "data": {
+        "name": "body.png",
+        "total": 1,
+        "map": [
+            {
+                "from": "#100001",
+                "to": "#100001"
+            }
+        ]
+    }
+}

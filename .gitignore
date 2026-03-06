@@ -3,6 +3,7 @@
 # ==========================================
 
 # --- C Engine: Binaries & Build Artifacts ---
+engine/build/
 core-engine/build/
 core-engine/src/*.o
 core-engine/src/*.a

@@ -1,0 +1,13 @@
+{
+    "cmd": "edit",
+    "type": "Character",
+    "character": {
+        "id": "char_01",
+        "name": "Aris",
+        "parts": {
+            "hair": "hair_style_2",
+            "body": "body_armor_blue",
+            "weapon": "iron_sword"
+        }
+    }
+}

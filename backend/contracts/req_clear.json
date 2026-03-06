@@ -1,0 +1,7 @@
+{
+    "cmd": "clear",
+    "imagePaths": [
+        "temp.png",
+        "temp2.png"
+    ]
+}
