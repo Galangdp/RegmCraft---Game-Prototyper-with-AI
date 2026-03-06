@@ -32,7 +32,8 @@ cd backend && npm install && npm run dev
 ```
 
 ### Build C Engine (Farel's Core)
-Gunakan command ini setiap kali ada update kode C++:
+Gunakan command ini setiap kali ada update kode C:
+D
 ```bash
 cd engine
 mkdir -p build && cd build
