@@ -1,0 +1,58 @@
+{
+    "name": "Journey",
+    "colors": [
+        "#050914", "#110524", "#3B063A", "#691749", "#9C3247", "#D46453", "#F5A15D", "#FFCF8E",
+        "#FF7A7D", "#FF417D", "#D61A88", "#94007A", "#42004E", "#220029", "#100726", "#25082C",
+        "#3D1132", "#73263D", "#BD4035", "#ED7B39", "#FFB84A", "#FFF540", "#C6D831", "#77B02A",
+        "#429058", "#2C645E", "#153C4A", "#052137", "#0E0421", "#0C0B42", "#032769", "#144491",
+        "#488BD4", "#78D7FF", "#B0FFF1", "#FAFFFF", "#C7D4E1", "#928FB8", "#5B537D", "#392946",
+        "#24142C", "#0E0F2C", "#132243", "#1A466B", "#10908E", "#28C074", "#3DFF6E", "#F8FFB8",
+        "#F0C297", "#CF968C", "#8F5765", "#52294B", "#0F022E", "#35003B", "#64004C", "#9B0E3E",
+        "#D41E3C", "#ED4C40", "#FF9757", "#D4662F", "#9C341A", "#691B22", "#450C28", "#2D002E"
+    ],
+    "semantics": {
+        "Outline": 0,
+        "White": 35,
+        "Mouth": 57,
+
+        "LightSkin": [7, 7, 6],
+        "NormalSkin": [6, 6, 5],
+        "DarkSkin": [5, 5, 4],
+
+        "NormalIron": [35, 36, 37],
+        "DarkIron": [36, 37, 38],
+        "BlackIron": [37, 38, 39],
+
+        "LightWood": [58, 59, 60],
+        "NormalWood": [59, 60, 61],
+        "DarkWood": [60, 61, 62],
+
+        "LightPaleWood": [38, 39, 40],
+        "NormalPaleWood": [49, 50, 51],
+        "DarkPaleWood": [50, 51, 39],
+
+        "NormalStone": [36, 37, 38],
+        "DarkStone": [38, 39, 40],
+
+        "LightLeaf": [21, 22, 23],
+        "NormalLeaf": [22, 23, 24],
+        "DarkLeaf": [23, 24, 25],
+
+        "LightPaleLeaf": [47, 46, 45],
+        "NormalPaleLeaf": [46, 45, 44],
+        "DarkPaleLeaf": [45, 44, 25],
+
+        "BrickRed": [57, 56, 55],
+
+        "NormalGold": [47, 21, 20],
+        "DarkGold": [21, 20, 19],
+
+        "NormalDiamond": [34, 33, 32],
+        "DarkDiamond": [33, 32, 31],
+
+        "NormalWater": [35, 35, 36],
+        "DarkWater": [36, 37, 38],
+
+        "Crack": [38, 39, 40]
+    }
+}

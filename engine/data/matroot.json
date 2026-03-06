@@ -1,0 +1,16 @@
+{
+    "palettes": [
+        "journey.json"
+    ],
+    "models": [
+        "person.json"
+    ],
+    "partVariants": [
+        "char_body_cowboy_jacket.json",
+        "char_hair_nerd.json",
+        "char_hat_cowboy_hat.json",
+        "char_head_normal_head.json",
+        "char_leg_levis_pant.json",
+        "char_weapon_knight_sword.json"
+    ]
+}

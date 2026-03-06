@@ -1,0 +1,22 @@
+{
+    "name": "Nerd",
+    "channels": {
+        "name": "Color",
+        "alias": "color",
+        "description": "Color of hair",
+        "families": [
+            { "name": "Red", "value": ["BrickRed"] }
+        ]
+    },
+    "data": {
+        "name": "char_hair_nerd.png",
+        "total": 58,
+        "map": [
+            { "from": "#050914", "to": "#200000" },
+            { "from": "#FAFFFF", "to": "#100100" },
+            { "from": "#94007A", "to": "#110000" },
+            { "from": "#42004E", "to": "#110001" },
+            { "from": "#220029", "to": "#110002" }
+        ]
+    }
+}
