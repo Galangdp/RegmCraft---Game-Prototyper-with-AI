@@ -13,6 +13,7 @@ import cors from "cors";
 import { spawn } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs/promises";
 
 // ─── Setup ───────────────────────────────────────────────────────────────────
 
@@ -21,18 +22,40 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Path ke binary C Engine (relatif dari root monorepo)
+// Sekarang poin ke engine/build/bin/rcengine per Farel's update
 const ENGINE_BINARY = process.env.ENGINE_BINARY_PATH
     ? path.resolve(__dirname, "..", "..", process.env.ENGINE_BINARY_PATH)
-    : path.resolve(__dirname, "../../core-engine/build/regm_engine");
+    : path.resolve(__dirname, "../../engine/build/bin/rcengine");
+
+const ENGINE_CWD = path.resolve(__dirname, "../../engine");
+const SHARED_STATE_PATH = path.resolve(ENGINE_CWD, "data/shared_state/supabase_assets.json");
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 
 app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000" }));
 app.use(express.json({ limit: "10mb" }));
 
+// Static folder untuk output C Engine (misal: temp.png)
+const OUTPUT_DIR = path.resolve(__dirname, "../../core-engine/output");
+app.use("/output", express.static(OUTPUT_DIR));
+
 // ─── Helper: Invoke C Engine ──────────────────────────────────────────────────
 
 // ─── Helper: Invoke C Engine ──────────────────────────────────────────────────
+
+/**
+ * Shared State: Sync Supabase assets to local JSON for C Engine
+ */
+async function syncSupabaseState(assets) {
+    try {
+        console.log(`[Bridge] Syncing ${assets.length} assets to local state...`);
+        await fs.writeFile(SHARED_STATE_PATH, JSON.stringify(assets, null, 2));
+        return true;
+    } catch (err) {
+        console.error(`[Bridge] Sync Error: ${err.message}`);
+        return false;
+    }
+}
 
 /**
  * Menjalankan C Engine sebagai child process dan berkomunikasi via stdin/stdout.
@@ -42,10 +65,12 @@ app.use(express.json({ limit: "10mb" }));
 function invokeEngine(payload) {
     return new Promise((resolve, reject) => {
         console.log(`[Engine] Spawning: ${ENGINE_BINARY}`);
+        console.log(`[Engine] CWD: ${ENGINE_CWD}`);
 
         // Spawn C Engine binary sebagai child process
         const engineProcess = spawn(ENGINE_BINARY, [], {
             stdio: ["pipe", "pipe", "pipe"], // [stdin, stdout, stderr]
+            cwd: ENGINE_CWD // Pastikan engine bisa baca data/matroot.json
         });
 
         let stdoutBuffer = "";
@@ -122,6 +147,77 @@ function invokeEngine(payload) {
 }
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
+
+/**
+ * Engine Initialization
+ * POST /api/engine/init
+ * Dipanggil sekali saat frontend load.
+ */
+app.post("/api/engine/init", async (req, res) => {
+    console.log("[API] ← Engine Init");
+    try {
+        // Sync state if assets are provided in the request
+        if (req.body.assets) {
+            await syncSupabaseState(req.body.assets);
+        }
+        const response = await invokeEngine({ cmd: "init" });
+        return res.json(response);
+    } catch (err) {
+        console.error(`[API] ✗ Init Error: ${err.message}`);
+        return res.status(500).json({ status: "error", error: err.message });
+    }
+});
+
+/**
+ * Edit Entity (Character/Monster/Vehicle)
+ * POST /api/engine/edit
+ */
+app.post("/api/engine/edit", async (req, res) => {
+    console.log(`[API] ← Engine Edit: type=${req.body.type}`);
+    try {
+        const response = await invokeEngine({ cmd: "edit", ...req.body });
+        return res.json(response);
+    } catch (err) {
+        console.error(`[API] ✗ Edit Error: ${err.message}`);
+        return res.status(500).json({ status: "error", error: err.message });
+    }
+});
+
+/**
+ * Create Entity (Empty or via Prompt)
+ * POST /api/engine/create
+ */
+app.post("/api/engine/create", async (req, res) => {
+    console.log(`[API] ← Engine Create: prompt=${req.body.prompt || "empty"}`);
+    try {
+        // Sync state before creation to ensure 'TAP' asset is available
+        if (req.body.assets) {
+            await syncSupabaseState(req.body.assets);
+        }
+        // Gunakan payload apa adanya (mendukung cmd: create atau create-empty)
+        const payload = req.body.cmd ? req.body : { cmd: "create", ...req.body };
+        const response = await invokeEngine(payload);
+        return res.json(response);
+    } catch (err) {
+        console.error(`[API] ✗ Create Error: ${err.message}`);
+        return res.status(500).json({ status: "error", error: err.message });
+    }
+});
+
+/**
+ * Clear Temp Files
+ * POST /api/engine/clear
+ */
+app.post("/api/engine/clear", async (req, res) => {
+    console.log(`[API] ← Engine Clear: count=${req.body.imagePaths?.length || 0}`);
+    try {
+        const response = await invokeEngine({ cmd: "clear", ...req.body });
+        return res.json(response);
+    } catch (err) {
+        console.error(`[API] ✗ Clear Error: ${err.message}`);
+        return res.status(500).json({ status: "error", error: err.message });
+    }
+});
 
 /**
  * Health check — untuk verifikasi backend berjalan

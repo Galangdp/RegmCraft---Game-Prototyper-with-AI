@@ -31,29 +31,15 @@ cd frontend && npm install && npm run dev
 cd backend && npm install && npm run dev
 ```
 
-### Build C Engine
-Initialize CMake configuration (debug mode):
+### Build C Engine (Farel's Core)
+Gunakan command ini setiap kali ada update kode C++:
 ```bash
 cd engine
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-cp -f "compile_commands.json" "../compile_commands.json"
+mkdir -p build && cd build
+cmake ..
+make
 ```
-Initialize CMake configuration (release mode):
-```bash
-cd engine
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-cp -f "compile_commands.json" "../compile_commands.json"
-```
-Build with CMake:
-```bash
-cd engine/build
-cmake --build .
-cp -f "bin/rcengine" "../rcengine"
-```
+Binary akan dihasilkan di `engine/build/bin/rcengine`. Backend secara otomatis memanggil path ini.
 
 ## Stdin/Stdout Contract
 The backend communicates with the C engine via **stdin/stdout JSON**:

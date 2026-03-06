@@ -1,6 +1,7 @@
 {
     "name": "regmcraft-backend",
     "version": "1.0.0",
+    "type": "module",
     "description": "RegmCraft Backend Bridge — NodeJS/Express server yang menjembatani Frontend dan C Engine",
     "main": "src/server.js",
     "scripts": {
