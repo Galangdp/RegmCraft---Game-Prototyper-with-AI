@@ -1,0 +1,26 @@
+{
+    "name": "Levis Pant",
+    "channels": {
+        "name": "Color",
+        "alias": "variant",
+        "description": "Variant of this levis.",
+        "families": [
+            { "name": "Brown", "value": ["NormalWood"] }
+        ]
+    },
+    "data": {
+        "name": "char_leg_levis_pant.png",
+        "total": 58,
+        "map": [
+            { "from": "#050914", "to": "#200000" },
+            { "from": "#FAFFFF", "to": "#100100" },
+            { "from": "#F5A15D", "to": "#110000" },
+            { "from": "#D46453", "to": "#110001" },
+            { "from": "#9C3247", "to": "#110002" },
+            { "from": "#C7D4E1", "to": "#110101" },
+            { "from": "#928FB8", "to": "#110102" },
+            { "from": "#FFCF8E", "to": "#120001" },
+            { "from": "#F5A15D", "to": "#120002" }
+        ]
+    }
+}

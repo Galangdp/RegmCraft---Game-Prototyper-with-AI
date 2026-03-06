@@ -1,0 +1,146 @@
+{
+    "name": "Person",
+    "description": "Type of this entity. Value must be this const 'Person'. This is generalized of person type like knight, viking, etc.",
+    "type": 0,
+    "base": 3,
+    "channels": {
+        "name": "Skin Color",
+        "alias": "skin",
+        "description": "Skin tone of this entity",
+        "families": [
+            { "name": "Light Skin", "value": ["LightSkin"] },
+            { "name": "Normal Skin", "value": ["NormalSkin"] },
+            { "name": "Dark Skin", "value": ["DarkSkin"] }
+        ]
+    },
+    "anims": [
+        {
+            "name": "Idle",
+            "loop": true,
+            "delays": [40, 10, 30],
+            "total": 3
+        },
+        {
+            "name": "Walk",
+            "loop": true,
+            "delays": [10, 10, 10, 10],
+            "total": 4
+        },
+        {
+            "name": "Run",
+            "loop": true,
+            "delays": [10, 10, 10, 10, 10, 10, 10, 10],
+            "total": 8
+        },
+        {
+            "name": "Magic Shoot",
+            "loop": false,
+            "require": 0,
+            "delays": [10, 10, 10, 10, 10],
+            "total": 5
+        },
+        {
+            "name": "Bow Shoot",
+            "loop": false,
+            "require": 0,
+            "delays": [10, 10, 10, 10, 10],
+            "total": 5
+        },
+        {
+            "name": "Gun Shoot",
+            "loop": false,
+            "require": 0,
+            "delays": [10, 10, 10, 10, 10],
+            "total": 5
+        },
+        {
+            "name": "Slash",
+            "loop": false,
+            "require": 0,
+            "delays": [10, 10, 10, 10, 10, 10],
+            "total": 6
+        },
+        {
+            "name": "Strut Punch",
+            "loop": false,
+            "require": 0,
+            "delays": [10, 10, 10, 10, 10, 10],
+            "total": 6
+        },
+        {
+            "name": "Strut",
+            "loop": false,
+            "require": 0,
+            "delays": [10, 10, 10, 10, 10, 10],
+            "total": 6
+        },
+        {
+            "name": "Hurt",
+            "loop": false,
+            "delays": [10, 10, 10, 10],
+            "total": 4
+        },
+        {
+            "name": "Die",
+            "loop": false,
+            "delays": [10, 10, 10, 10, 10, 10],
+            "total": 6
+        }
+    ],
+    "parts": [
+        {
+            "name": "Weapon",
+            "alias": "weapon",
+            "description": "This is an optional property. If person has weapon, this property filled, if not set null.",
+            "optional": true,
+            "variants": [
+                { "name": "char_weapon_knight_sword.json", "exclude": [3, 4, 5, 7, 8] }
+            ]
+        },
+        {
+            "name": "Hat",
+            "alias": "hat",
+            "description": "This is an optional property. If person has hat, this property filled, if not set null.",
+            "optional": true,
+            "variants": [
+                { "name": "char_hat_cowboy_hat.json", "exclude": [] }
+            ]
+        },
+        {
+            "name": "Hair",
+            "alias": "hair",
+            "description": "This is an optional property. If person has hair, this property filled, if not set null.",
+            "optional": true,
+            "variants": [
+                { "name": "char_hair_nerd.json", "exclude": [] }
+            ]
+        },
+        {
+            "name": "Head",
+            "alias": "head",
+            "description": "This property must be filled, if not specify, sets to first option.",
+            "optional": false,
+            "variants": [
+                { "name": "char_head_normal_head.json", "exclude": [] }
+            ]
+        },
+        {
+            "name": "Leg",
+            "alias": "leg",
+            "description": "This property must be filled, if not specify, sets to first option.",
+            "optional": false,
+            "variants": [
+                { "name": "char_leg_levis_pant.json", "exclude": [] }
+            ]
+        },
+        {
+            "name": "Body",
+            "alias": "body",
+            "description": "This property must be filled, if not specify, sets to first option.",
+            "optional": false,
+            "variants": [
+                { "name": "char_body_cowboy_jacket.json", "exclude": [] }
+            ]
+        }
+    ]
+}

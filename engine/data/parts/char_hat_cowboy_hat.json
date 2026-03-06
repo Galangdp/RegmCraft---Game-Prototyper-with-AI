@@ -1,0 +1,23 @@
+{
+    "name": "Cowboy Hat",
+    "channels": {
+        "name": "Color",
+        "alias": "color",
+        "description": "Color of hat",
+        "families": [
+            { "name": "Brown", "value": ["NormalWood"] }
+        ]
+    },
+    "data": {
+        "name": "char_hat_cowboy_hat.png",
+        "total": 58,
+        "map": [
+            { "from": "#050914", "to": "#200000" },
+            { "from": "#2D002E", "to": "#100100" },
+            { "from": "#94007A", "to": "#010000" },
+            { "from": "#F5A15D", "to": "#110000" },
+            { "from": "#D46453", "to": "#110001" },
+            { "from": "#9C3247", "to": "#110002" }
+        ]
+    }
+}

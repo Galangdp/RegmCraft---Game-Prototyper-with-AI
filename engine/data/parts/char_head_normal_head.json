@@ -1,0 +1,14 @@
+{
+    "name": "Face",
+    "data": {
+        "name": "char_head_normal_head.png",
+        "total": 58,
+        "map": [
+            { "from": "#050914", "to": "#200000" },
+            { "from": "#FAFFFF", "to": "#100100" },
+            { "from": "#ED4C40", "to": "#100200" },
+            { "from": "#FFCF8E", "to": "#120001" },
+            { "from": "#F5A15D", "to": "#120002" }
+        ]
+    }
+}

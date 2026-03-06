@@ -1,0 +1,28 @@
+{
+    "name": "Knight Sword",
+    "channels": {
+        "name": "Color",
+        "alias": "color",
+        "description": "Color of sword handle. The sharp part itself has color of iron.",
+        "families": [
+            { "name": "Red", "value": ["BrickRed", "NormalIron"] },
+            { "name": "Gold", "value": ["NormalGold", "NormalIron"] },
+            { "name": "Dark", "value": ["DarkIron", "NormalIron"] },
+            { "name": "Wood", "value": ["NormalWood", "NormalIron"] }
+        ]
+    },
+    "data": {
+        "name": "char_weapon_knight_sword.png",
+        "total": 31,
+        "map": [
+            { "from": "#050914", "to": "#200000" },
+            { "from": "#691B22", "to": "#100100" },
+            { "from": "#ED4C40", "to": "#110001" },
+            { "from": "#D41E3C", "to": "#110002" },
+            { "from": "#FAFFFF", "to": "#110101" },
+            { "from": "#C7D4E1", "to": "#110102" },
+            { "from": "#FFCF8E", "to": "#120001" },
+            { "from": "#F5A15D", "to": "#120002" }
+        ]
+    }
+}
