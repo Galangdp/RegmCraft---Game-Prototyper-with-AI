@@ -40,7 +40,7 @@ int main(int argc, const char *argv[]) {
 
         if (jsonmat_decode_material(&matroot, &perm_arena, &temp_arena, &json_idmap, &color_map, &color_stats, &buffer, &error_message) != EXIT_SUCCESS) {
             string_t temp;
-
+            
             string_from_cstr(&temp, CSTR_FTL_TPFRONT);
             string_push_string(&temp, &error_message);
             string_push_cstr(&temp, CSTR_ALE_TPBACK);
@@ -51,6 +51,22 @@ int main(int argc, const char *argv[]) {
 
     srand(time(NULL));
     composition_ctx_set_arena(&temp_arena);
+
+    // json_t out;
+    // string_t buffer;
+
+    // string_init_capacity(&buffer, 512);
+
+    // puts("Marker0");
+    // command_init(&matroot, &error_message, &out);
+    // json_stringify(&out, &buffer);
+    // string_println(&buffer);
+    // puts("Marker1");
+    // string_clear(&buffer);
+    // command_uinit(&matroot, &error_message, 0, &out);
+    // json_stringify(&out, &buffer);
+    // string_println(&buffer);
+    // puts("Marker2");
 
     json_t in;
     json_t out;
