@@ -1,0 +1,148 @@
+{
+    "base": "temp/base.png",
+    "paletteId": 0,
+    "monsters": [],
+    "vehicles": [],
+    "palettes": [
+        { "name": "Journey", "total": 64 }
+    ],
+    "status": "ok",
+    "persons": [
+        {
+            "name": "Person",
+            "id": 0,
+            "variant": {
+                "name": "Skin Color",
+                "options": [
+                    { "frameId": 0, "name": "Light Skin" },
+                    { "frameId": 1, "name": "Normal Skin" },
+                    { "frameId": 2, "name": "Dark Skin" }
+                ]
+            },
+            "parts": [
+                {
+                    "name": "Weapon",
+                    "variants": [
+                        {
+                            "id": -1,
+                            "name": "None"
+                        },
+                        {
+                            "id": 0,
+                            "frameId": 3,
+                            "name": "Knight Sword",
+                            "options": [
+                                {
+                                    "id": 0,
+                                    "frameId": 4,
+                                    "name": "Red"
+                                },
+                                {
+                                    "id": 1,
+                                    "frameId": 5,
+                                    "name": "Gold"
+                                },
+                                {
+                                    "id": 2,
+                                    "frameId": 6,
+                                    "name": "Dark"
+                                },
+                                {
+                                    "id": 3,
+                                    "frameId": 7,
+                                    "name": "Wood"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Hat",
+                    "variants": [
+                        {
+                            "id": -1,
+                            "name": "None"
+                        },
+                        {
+                            "id": 0,
+                            "frameId": 8,
+                            "name": "Cowboy Hat",
+                            "options": [
+                                {
+                                    "id": 0,
+                                    "frameId": 9,
+                                    "name": "Brown"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Hair",
+                    "variants": [
+                        {
+                            "name": "None",
+                            "id": -1
+                        },
+                        {
+                            "id": 0,
+                            "frameId": 10,
+                            "name": "Nerd",
+                            "options": [
+                                {
+                                    "id": 0,
+                                    "frameId": 11,
+                                    "name": "Red"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Head",
+                    "variants": [
+                        {
+                            "id": 0,
+                            "frameId": 12,
+                            "name": "Face"
+                        }
+                    ]
+                },
+                {
+                    "name": "Leg",
+                    "variants": [
+                        {
+                            "id": 0,
+                            "frameId": 13,
+                            "name": "Levis Pant",
+                            "options": [
+                                {
+                                    "id": 0,
+                                    "frameId": 14,
+                                    "name": "Brown"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Body",
+                    "variants": [
+                        {
+                            "id": 0,
+                            "frameId": 15,
+                            "name": "Cowboy Jacket",
+                            "options": [
+                                {
+                                    "id": 0,
+                                    "frameId": 16,
+                                    "name": "Brown"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
