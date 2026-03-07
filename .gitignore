@@ -4,16 +4,9 @@
 
 # --- C Engine: Binaries & Build Artifacts ---
 engine/build/
-core-engine/build/
-core-engine/src/*.o
-core-engine/src/*.a
-core-engine/*.o
-core-engine/*.a
-core-engine/*.so
-core-engine/*.dylib
-core-engine/*.exe
-*.o
-*.a
+engine/data/
+engine/compile_commands.json
+engine/rcengine
 
 # --- Node.js ---
 node_modules/
