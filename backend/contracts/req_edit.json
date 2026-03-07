@@ -1,13 +1,16 @@
 {
     "cmd": "edit",
-    "type": "Character",
-    "character": {
-        "id": "char_01",
-        "name": "Aris",
-        "parts": {
-            "hair": "hair_style_2",
-            "body": "body_armor_blue",
-            "weapon": "iron_sword"
-        }
+    "paletteId": 0,
+    "data": {
+        "modelId": 0,
+        "moptionId": 1,
+        "parts": [
+            { "variantId": 0, "optionId":  0 },
+            { "variantId": -1 },
+            { "variantId": -1 },
+            { "variantId": 0 },
+            { "variantId": 0, "optionId":  0 },
+            { "variantId": 0, "optionId":  0 }
+        ]
     }
 }
