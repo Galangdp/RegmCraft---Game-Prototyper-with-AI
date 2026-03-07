@@ -42,14 +42,16 @@ FORCE_INLINE status_t jsonmat_decode_model(model_t *model, part_variant_t *part_
         colorchn_t *colorchn_dest = model_alloc_colorchn(model);
         json_object_t *colorchn_obj = colorchn->jobj;
         json_value_t *name = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_NAME, sizeof(JSONMAT_STR_NAME));
+        json_value_t *alias = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_ALIAS, sizeof(JSONMAT_STR_ALIAS));
+        json_value_t *description = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_DESCRIPTION, sizeof(JSONMAT_STR_DESCRIPTION));
         json_value_t *families = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_FAMILIES, sizeof(JSONMAT_STR_FAMILIES));
 
-        if (name == NULL || families == NULL) {
+        if (name == NULL || families == NULL || alias == NULL || description == NULL) {
             string_from_cstr(error_message, "Missing property of channel part.");
             return EXIT_FAILURE;
         }
 
-        if (name->type != JSON_VTYPE_STRING || families->type != JSON_VTYPE_ARRAY) {
+        if (name->type != JSON_VTYPE_STRING || alias->type != JSON_VTYPE_STRING || description->type != JSON_VTYPE_STRING || families->type != JSON_VTYPE_ARRAY) {
             string_from_cstr(error_message, "Error type mismatch for channel part.");
             return EXIT_FAILURE;
         }
@@ -58,6 +60,9 @@ FORCE_INLINE status_t jsonmat_decode_model(model_t *model, part_variant_t *part_
             string_from_cstr(error_message, "Channel name length must be >= 1 and <= 32.");
             return EXIT_FAILURE;
         }
+
+        model_set_colorchn_alias(model, alias->string);
+        model_set_colorchn_description(model, description->string);
 
         json_array_t *families_jarr = families->jarr;
 
@@ -188,26 +193,30 @@ FORCE_INLINE status_t jsonmat_decode_model(model_t *model, part_variant_t *part_
             }
 
             json_value_t *name = json_object_sget(parts->jobj, JSONMAT_STR_NAME, sizeof(JSONMAT_STR_NAME));
+            json_value_t *alias = json_object_sget(parts->jobj, JSONMAT_STR_ALIAS, sizeof(JSONMAT_STR_ALIAS));
+            json_value_t *description = json_object_sget(parts->jobj, JSONMAT_STR_DESCRIPTION, sizeof(JSONMAT_STR_DESCRIPTION));
             json_value_t *optional = json_object_sget(parts->jobj, JSONMAT_STR_OPTIONAL, sizeof(JSONMAT_STR_OPTIONAL));
             json_value_t *variants = json_object_sget(parts->jobj, JSONMAT_STR_VARIANTS, sizeof(JSONMAT_STR_FAMILIES));
 
-            if (name == NULL || optional == NULL || variants == NULL) {
+            if (name == NULL || optional == NULL || alias == NULL || description == NULL || variants == NULL) {
                 string_from_cstr(error_message, "Some anim prop are missing.");
                 return EXIT_FAILURE;
             }
 
-            if (name->type != JSON_VTYPE_STRING || optional->type != JSON_VTYPE_BOOL || variants->type != JSON_VTYPE_ARRAY) {
+            if (name->type != JSON_VTYPE_STRING || alias->type != JSON_VTYPE_STRING || description->type != JSON_VTYPE_STRING || optional->type != JSON_VTYPE_BOOL || variants->type != JSON_VTYPE_ARRAY) {
                 string_from_cstr(error_message, "Some anim prop are mismatch.");
                 return EXIT_FAILURE;
             }
 
-            if (name->string->length == 0 || name->string->length > 32) {
-                string_from_cstr(error_message, "Prop name length must be >= 1 and <= 32.");
+            if (name->string->length == 0 || alias->string->length == 0 || description->string->length == 0 || name->string->length > 32) {
+                string_from_cstr(error_message, "Prop string length must valid.");
                 return EXIT_FAILURE;
             }
 
             model_part_init(part, variants->jarr->length, optional->bool);
             model_part_set_name(part, name->string);
+            model_part_set_alias(part, alias->string);
+            model_part_set_description(part, description->string);
 
             for (uint8_t j = 0; j < variants->jarr->length; j++) {
                 json_value_t *partvd_raw = json_array_atuns(variants->jarr, j);
