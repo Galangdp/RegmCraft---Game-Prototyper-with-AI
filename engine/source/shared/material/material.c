@@ -69,6 +69,8 @@ void part_variant_frame_set_new(part_variant_frame_t *frame) {
 
 void part_variant_init(part_variant_t *part_variant, uint8_t total_frames) {
     part_variant->colorchn = NULL;
+    part_variant->colorchn_alias = NULL;
+    part_variant->colorchn_description = NULL;
 
     part_variant->frames.entries = arena_alloc(material_arena, (size_t) total_frames * sizeof(part_variant_frame_t));
     part_variant->frames.length = total_frames;
@@ -85,6 +87,22 @@ void part_variant_set_name(part_variant_t *part_variant, const string_view_t *na
     part_variant->name.length = name->length;
 
     memcpy(part_variant->name.cstr, name->cstr, name->length);
+}
+
+void part_variant_set_colorchn_alias(part_variant_t *part_variant, const string_view_t *alias) {
+    part_variant->colorchn_alias = arena_alloc(material_arena, sizeof(string_view_t));
+    part_variant->colorchn_alias->cstr = arena_alloc(material_arena, alias->length);
+    part_variant->colorchn_alias->length = alias->length;
+
+    memcpy(part_variant->colorchn_alias->cstr, alias->cstr, alias->length);
+}
+
+void part_variant_set_colorchn_description(part_variant_t *part_variant, const string_view_t *description) {
+    part_variant->colorchn_description = arena_alloc(material_arena, sizeof(string_view_t));
+    part_variant->colorchn_description->cstr = arena_alloc(material_arena, description->length);
+    part_variant->colorchn_description->length = description->length;
+
+    memcpy(part_variant->colorchn_description->cstr, description->cstr, description->length);
 }
 
 void model_part_variant_init(model_part_variant_t *partvd, part_variant_t *data, uint8_t total_anims) {
@@ -108,6 +126,20 @@ void model_part_set_name(model_part_t *part, const string_view_t *name) {
     memcpy(part->name.cstr, name->cstr, name->length);
 }
 
+void model_part_set_alias(model_part_t *part, const string_view_t *alias) {
+    part->alias.cstr = arena_alloc(material_arena, alias->length);
+    part->alias.length = alias->length;
+
+    memcpy(part->alias.cstr, alias->cstr, alias->length);
+}
+
+void model_part_set_description(model_part_t *part, const string_view_t *description) {
+    part->description.cstr = arena_alloc(material_arena, description->length);
+    part->description.length = description->length;
+
+    memcpy(part->description.cstr, description->cstr, description->length);
+}
+
 void anim_init(anim_t *anim, uint8_t total_frames, bool_t loop) {
     anim->is_looping = loop;
     anim->total_frames = total_frames;
@@ -125,6 +157,8 @@ void anim_set_name(anim_t *anim, const string_view_t *name) {
 void model_init(model_t *model, model_type_t type, uint8_t total_anims, uint8_t total_parts, uint8_t base) {
     model->type = type;
     model->colorchn = NULL;
+    model->colorchn_alias = NULL;
+    model->colorchn_description = NULL;
     model->base = base;
 
     model->parts.entries = arena_alloc(material_arena, total_parts * sizeof(model_part_t));
@@ -139,6 +173,22 @@ void model_set_name(model_t *model, const string_view_t *name) {
     model->name.length = name->length;
 
     memcpy(model->name.cstr, name->cstr, name->length);
+}
+
+void model_set_colorchn_alias(model_t *model, const string_view_t *alias) {
+    model->colorchn_alias = arena_alloc(material_arena, sizeof(string_view_t));
+    model->colorchn_alias->cstr = arena_alloc(material_arena, alias->length);
+    model->colorchn_alias->length = alias->length;
+
+    memcpy(model->colorchn_alias->cstr, alias->cstr, alias->length);
+}
+
+void model_set_colorchn_description(model_t *model, const string_view_t *description) {
+    model->colorchn_description = arena_alloc(material_arena, sizeof(string_view_t));
+    model->colorchn_description->cstr = arena_alloc(material_arena, description->length);
+    model->colorchn_description->length = description->length;
+
+    memcpy(model->colorchn_description->cstr, description->cstr, description->length);
 }
 
 colorchn_t *model_alloc_colorchn(model_t *model) {
