@@ -24,6 +24,8 @@ extern const char JSONMAT_STR_VARIANTS[8];
 extern const char JSONMAT_STR_EXCLUDE[7];
 extern const char JSONMAT_STR_REQUIRE[7];
 extern const char JSONMAT_STR_BASE[4];
+extern const char JSONMAT_STR_ALIAS[5];
+extern const char JSONMAT_STR_DESCRIPTION[11];
 
 extern const char JSONMAT_STR_PARTS[5];
 extern const char JSONMAT_STR_IMAGES[6];
