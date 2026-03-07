@@ -2,6 +2,7 @@
 #define UTILS_UTILS_H
 
 #include <string.h>
+#include <stdio.h>
 #include "utils/macro.h"
 #include "utils/types.h"
 
@@ -33,7 +34,7 @@ FORCE_INLINE void write_le64(uint8_t *buffer, size_t index, uint64_t value);
 
 FORCE_INLINE uint32_t ceil_pow2_32(uint32_t value) {
 #if defined(__clang__) || defined(__GNUC__)
-    return value <= 1 ? 1 : (uint32_t) 1 << (32 - __builtin_clzll(value - 1));
+    return value <= 1 ? 1 : (uint32_t) 1 << (32 - __builtin_clz(value - 1));
 #else
     value--;
     value |= value >> 1;
