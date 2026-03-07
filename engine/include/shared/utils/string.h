@@ -1,6 +1,7 @@
 #ifndef UTILS_STRING_H
 #define UTILS_STRING_H
 
+#include <stdio.h>
 #include "utils/hash.h"
 #include "utils/memory.h"
 
