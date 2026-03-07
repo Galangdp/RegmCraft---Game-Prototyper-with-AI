@@ -42,6 +42,22 @@ status_t command_process(matroot_t *matroot, string_t *error_message, const json
     switch (command_id) {
         case COMMAND_ID_INIT:
             return command_init(matroot, error_message, out);
+        
+        case COMMAND_ID_UINIT: {
+            json_value_t *palette_id = json_object_cget(in_jobj, "paletteId");
+
+            if (palette_id == NULL || palette_id->type != JSON_VTYPE_INT64) {
+                string_from_cstr(error_message, "Some prop e.g. paletteId or type missing or invalid.");
+                return EXIT_FAILURE;
+            }
+
+            if (palette_id->int64 < 0 || palette_id->int64 >= matroot->palettes.length) {
+                string_from_cstr(error_message, "Prop paletteId is invalid.");
+                return EXIT_FAILURE;
+            }
+
+            return command_uinit(matroot, error_message, palette_id->int64, out);
+        }
 
         case COMMAND_ID_CREATE: {
             json_value_t *palette_id = json_object_cget(in_jobj, "paletteId");
@@ -57,7 +73,7 @@ status_t command_process(matroot_t *matroot, string_t *error_message, const json
                 return EXIT_FAILURE;
             }
 
-            if (type->int64 < MODEL_TYPE_CHARACTER || type->int64 > MODEL_TYPE_VEHICLE) {
+            if (type->int64 < MODEL_TYPE_PERSON || type->int64 > MODEL_TYPE_VEHICLE) {
                 string_from_cstr(error_message, "P type is invalid, must be either 0, 1 or 2.");
                 return EXIT_FAILURE;
             }
