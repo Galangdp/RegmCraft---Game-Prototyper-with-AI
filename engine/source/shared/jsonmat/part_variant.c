@@ -222,22 +222,27 @@ FORCE_INLINE status_t jsonmat_decode_part_variant_json(part_variant_t *part_vari
         colorchn_t *colorchn_dest = part_variant_alloc_colorchn(part_variant);
         json_object_t *colorchn_obj = colorchn->jobj;
         json_value_t *name = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_NAME, sizeof(JSONMAT_STR_NAME));
+        json_value_t *alias = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_ALIAS, sizeof(JSONMAT_STR_ALIAS));
+        json_value_t *description = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_DESCRIPTION, sizeof(JSONMAT_STR_DESCRIPTION));
         json_value_t *families = json_object_sget((json_object_t *) colorchn_obj, JSONMAT_STR_FAMILIES, sizeof(JSONMAT_STR_FAMILIES));
 
-        if (name == NULL || families == NULL) {
+        if (name == NULL || families == NULL || alias == NULL || description == NULL) {
             string_from_cstr(error_message, "Missing property of channel part.");
             return EXIT_FAILURE;
         }
 
-        if (name->type != JSON_VTYPE_STRING || families->type != JSON_VTYPE_ARRAY) {
+        if (name->type != JSON_VTYPE_STRING || alias->type != JSON_VTYPE_STRING || description->type != JSON_VTYPE_STRING || families->type != JSON_VTYPE_ARRAY) {
             string_from_cstr(error_message, "Error type mismatch for channel part.");
             return EXIT_FAILURE;
         }
 
-        if (name->string->length == 0 || name->string->length > 32) {
-            string_from_cstr(error_message, "Channel name length must be >= 1 and <= 32.");
+        if (name->string->length == 0 || alias->string->length == 0 || description->string->length == 0 || name->string->length > 32) {
+            string_from_cstr(error_message, "Channel prop length must valid.");
             return EXIT_FAILURE;
         }
+
+        part_variant_set_colorchn_alias(part_variant, alias->string);
+        part_variant_set_colorchn_description(part_variant, description->string);
 
         json_array_t *families_jarr = families->jarr;
 
