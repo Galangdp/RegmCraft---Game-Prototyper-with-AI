@@ -55,6 +55,7 @@ add_library(sharedlib
     "command/edit.c"
     "command/init.c"
     "command/process.c"
+    "command/uinit.c"
     "command/utils.c"
 
     "composition/composition.c"
