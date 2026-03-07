@@ -3,8 +3,10 @@
 
 #include "command/command.h"
 
-#define COMMAND_BASE_PATH       "temp/base.png"
-#define COMMAND_TEMP_PATH       "temp/temp.png"
+#define COMMAND_BASE_PATH           "temp/base.png"
+#define COMMAND_TEMP_PATH           "temp/temp.png"
+#define COMMAND_SCHEMA_PATH         "temp/schema.json"
+#define COMMAND_INSTRUCTION_PATH    "temp/instruction.txt"
 
 extern arena_t *composition_arena;
 
