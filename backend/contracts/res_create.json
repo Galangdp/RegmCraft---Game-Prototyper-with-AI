@@ -1,0 +1,58 @@
+{
+    "status": "ok",
+    "base":  "temp/temp.png",
+    "parts":  [
+        { "optionId": 1, "variantId": 0 },
+        { "variantId": -1},
+        { "optionId": 0, "variantId": 0 },
+        { "optionId": 0, "variantId": 0 },
+        { "optionId": 0, "variantId": 0 },
+        { "optionId": 0, "variantId": 0 }
+    ],
+    "modelId": 0,
+    "moptionId": 0,
+    "anims": [
+        {
+            "loop": true,
+            "delays": [0.4, 0.1, 0.3],
+            "name": "Idle",
+            "from": 0,
+            "to": 2
+        },
+        {
+            "loop": true,
+            "delays": [0.1, 0.1, 0.1, 0.1],
+            "name": "Walk",
+            "from": 3,
+            "to": 6
+        },
+        {
+            "loop": true,
+            "delays": [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+            "name": "Run",
+            "from": 7,
+            "to": 14
+        },
+        {
+            "loop": false,
+            "delays": [0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+            "name": "Slash",
+            "from": 15,
+            "to": 20
+        },
+        {
+            "loop": false,
+            "delays": [0.1, 0.1, 0.1, 0.1],
+            "name": "Hurt",
+            "from": 21,
+            "to": 24
+        },
+        {
+            "loop": false,
+            "delays": [0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+            "name": "Die",
+            "from": 25,
+            "to": 30
+        }
+    ]
+}
