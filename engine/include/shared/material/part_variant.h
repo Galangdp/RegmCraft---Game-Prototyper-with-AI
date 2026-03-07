@@ -15,6 +15,8 @@ typedef struct part_variant_frame {
 typedef struct part_variant {
     string_view_t name;
     colorchn_t *colorchn;
+    string_view_t *colorchn_alias;
+    string_view_t *colorchn_description;
     struct {
         part_variant_frame_t *entries;
         uint8_t length;
@@ -27,6 +29,8 @@ void part_variant_frame_set_new(part_variant_frame_t *frame);
 
 void part_variant_init(part_variant_t *part_variant, uint8_t total_frames);
 void part_variant_set_name(part_variant_t *part_variant, const string_view_t *name);
+void part_variant_set_colorchn_alias(part_variant_t *part_variant, const string_view_t *alias);
+void part_variant_set_colorchn_description(part_variant_t *part_variant, const string_view_t *description);
 colorchn_t *part_variant_alloc_colorchn(part_variant_t *part_variant);
 FORCE_INLINE part_variant_frame_t *part_variant_alloc_frame(part_variant_t *part_variant);
 
