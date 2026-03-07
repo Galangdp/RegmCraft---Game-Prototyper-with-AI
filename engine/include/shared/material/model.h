@@ -5,7 +5,7 @@
 #include "material/part_variant.h"
 
 typedef enum model_type {
-    MODEL_TYPE_CHARACTER,
+    MODEL_TYPE_PERSON,
     MODEL_TYPE_MONSTER,
     MODEL_TYPE_VEHICLE
 } model_type_t;
@@ -17,6 +17,8 @@ typedef struct model_part_variant {
 
 typedef struct model_part {
     string_view_t name;
+    string_view_t alias;
+    string_view_t description;
     struct {
         model_part_variant_t *entries;
         uint8_t length;
@@ -34,7 +36,10 @@ typedef struct anim {
 
 typedef struct model {
     string_view_t name;
+    string_view_t description;
     colorchn_t *colorchn;
+    string_view_t *colorchn_alias;
+    string_view_t *colorchn_description;
     struct {
         model_part_t *entries;
         uint8_t length;
@@ -53,6 +58,8 @@ FORCE_INLINE bool_t model_part_variant_is_exclude(model_part_variant_t *partvd, 
 
 void model_part_init(model_part_t *part, uint8_t total_variants, bool_t optional);
 void model_part_set_name(model_part_t *part, const string_view_t *name);
+void model_part_set_alias(model_part_t *part, const string_view_t *alias);
+void model_part_set_description(model_part_t *part, const string_view_t *description);
 FORCE_INLINE model_part_variant_t *model_part_alloc_variant(model_part_t *part);
 
 void anim_init(anim_t *anim, uint8_t total_frames, bool_t loop);
@@ -62,6 +69,8 @@ FORCE_INLINE void anim_set_delay(anim_t *anim, uint8_t index, uint16_t delay);
 
 void model_init(model_t *model, model_type_t type, uint8_t total_anims, uint8_t total_parts, uint8_t base);
 void model_set_name(model_t *model, const string_view_t *name);
+void model_set_colorchn_alias(model_t *model, const string_view_t *alias);
+void model_set_colorchn_description(model_t *model, const string_view_t *description);
 colorchn_t *model_alloc_colorchn(model_t *model);
 FORCE_INLINE model_part_t *model_alloc_part(model_t *model);
 FORCE_INLINE anim_t *model_alloc_anim(model_t *model);
