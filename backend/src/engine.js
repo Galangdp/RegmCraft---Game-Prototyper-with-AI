@@ -200,6 +200,7 @@ const Engine = {
             const result = await Engine._send("create", { type: 0, paletteId: paletteId });
     
             delete result.status;
+            result.type = 0;
 
             resolve({ status: "ok", items: [result] });
         });
