@@ -23,6 +23,8 @@ const char JSONMAT_STR_VARIANTS[8] = "variants";
 const char JSONMAT_STR_EXCLUDE[7] = "exclude";
 const char JSONMAT_STR_REQUIRE[7] = "require";
 const char JSONMAT_STR_BASE[4] = "base";
+const char JSONMAT_STR_ALIAS[5] = "alias";
+const char JSONMAT_STR_DESCRIPTION[11] = "description";
 
 const char JSONMAT_STR_PARTS[5] = "parts";
 const char JSONMAT_STR_IMAGES[6] = "images";
