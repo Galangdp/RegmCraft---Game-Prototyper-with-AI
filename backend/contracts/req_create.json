@@ -1,4 +1,5 @@
 {
     "cmd": "create",
-    "prompt": "Create a dragon-slayer warrior with golden armor and blue hair"
+    "paletteId": 0,
+    "type": 0
 }
